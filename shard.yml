@@ -1,0 +1,11 @@
+name: ayanami
+version: 0.0.1
+
+authors:
+  - salival <salival@riseup.net>
+
+license: MIT
+
+targets:
+  bot:
+    main: tests/main.cr
