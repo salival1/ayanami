@@ -1,5 +1,5 @@
 module Ayanami
-    Version = "0.0.2"
+    Version = "0.0.3"
     RealName = "Ayanami v#{Ayanami::Version} https://gitgud.io/salival/ayanami"
     module Strings
         PRIVMSG = "PRIVMSG %s :%s"

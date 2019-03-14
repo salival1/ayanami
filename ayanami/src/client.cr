@@ -1,8 +1,10 @@
 require "socket"
 require "openssl"
+require "./ikari.cr"
 module Ayanami
-    class Client
+    class Client < Ayanami::Ikari
         def initialize(server : String, nick : String, **kwargs)
+            super()
             @server = server
             @port = kwargs["port"]? || 6667
             @connected = false
@@ -17,7 +19,7 @@ module Ayanami
                 message.each{|x| send(x)} 
             else 
                 @sock << "#{message}\n"
-                puts "<< #{message}"
+                printf("<< %s\n", message)
                 @sock.flush() # is this really needed? SSL wants it but regular doesnt seem to care 
             end
         end
@@ -47,8 +49,16 @@ module Ayanami
             nick(@nick)
             send(Ayanami::Strings::USER % [@nick, @realname])
             while ((resp=@sock.gets("\n", 512)))
-                puts ">> #{resp}"    
-                send(Ayanami::Strings::PONG % resp[6..-1]) if (resp[0] == 'P')
+                fire("line", Ayanami::EventHolster{"line" => resp})
+                if (resp[0] == 'P')
+                    send(Ayanami::Strings::PONG % resp[6..-1])
+                else
+                    args = resp.split(" ")
+                    case (args[1])
+                    when "001"
+                        fire("welcome")
+                    end
+                end
             end
         end
     end
