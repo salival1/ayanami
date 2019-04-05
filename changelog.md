@@ -12,3 +12,8 @@ initial release
 0.0.3
 + rudimentary event system (#11)
 + 001 support
+
+0.0.4
+* RPLs moved to Ayanami::RPL
+* ERR_NICKNAMEINUSE added to Ayanami::ERR for future update.
++ PRIVMSG event support

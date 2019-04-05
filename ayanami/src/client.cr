@@ -55,8 +55,14 @@ module Ayanami
                 else
                     args = resp.split(" ")
                     case (args[1])
-                    when "001"
+                    when Ayanami::RPL::WELCOME
                         fire("welcome")
+                    when "PRIVMSG"
+                        mask = args[0][1..-1].split("@")
+                        nick, ident = mask[0].split("!")
+                        message = args[3..-1]
+                        message[0] = message[0][1..-1]
+                        fire("privmsg", Ayanami::EventHolster{"target" => args[2], "message" => message, "nick" => nick, "ident" => ident, "host" => mask[1]}) 
                     end
                 end
             end

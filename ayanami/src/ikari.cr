@@ -1,5 +1,5 @@
 module Ayanami
-    alias EventHolster = Hash(String, String|Int32|Bool|Hash(String, String|Bool)) 
+    alias EventHolster = Hash(String, String|Int32|Bool|Hash(String, String|Bool)|Array(String)) 
     alias HookFunc = Proc(EventHolster, Nil)
     class Ikari
         def initialize()
