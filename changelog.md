@@ -17,3 +17,7 @@ initial release
 * RPLs moved to Ayanami::RPL
 * ERR_NICKNAMEINUSE added to Ayanami::ERR for future update.
 + PRIVMSG event support
+
+0.0.5
++ Ayanami.split_host added
++ KICK event support

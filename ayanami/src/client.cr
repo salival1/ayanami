@@ -58,11 +58,13 @@ module Ayanami
                     when Ayanami::RPL::WELCOME
                         fire("welcome")
                     when "PRIVMSG"
-                        mask = args[0][1..-1].split("@")
-                        nick, ident = mask[0].split("!")
-                        message = args[3..-1]
-                        message[0] = message[0][1..-1]
-                        fire("privmsg", Ayanami::EventHolster{"target" => args[2], "message" => message, "nick" => nick, "ident" => ident, "host" => mask[1]}) 
+                        args[3] = args[3][1..-1]
+                        invoker = Ayanami.split_host(args[0])
+                        fire("privmsg", Ayanami::EventHolster{"target" => args[2], "message" => args[3..-1], "nick" => invoker.nick, "ident" => invoker.ident, "host" => invoker.host}) 
+                    when "KICK"
+                        invoker = Ayanami.split_host(args[0])
+                        fire("kick", Ayanami::EventHolster{"channel" => args[2], "target" => args[3], "reason": args[4], "nick" => invoker.nick, "ident" => invoker.ident, "host" => invoker.host})
+                    
                     end
                 end
             end
